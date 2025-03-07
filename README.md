@@ -1,12 +1,12 @@
 # uConsole Network Toggle
 
-A command-line application to toggle between WiFi and 4G mobile connectivity on the uConsole device running Kali Linux.
+A command-line application to toggle between WiFi and 4G mobile connectivity on the uConsole device running Kali Linux. Optimized for Raspberry Pi CM4-based uConsole.
 
 ## Features
 
 - Toggle between WiFi and 4G mobile connectivity
 - Display current connection status and IP address
-- Support for both uConsole CM4 and A06/R01 models
+- Optimized for Raspberry Pi CM4-based uConsole (also works with A06/R01 models)
 - Automatic configuration of 4G connection with Digi Spain APN
 - Command-line interface for maximum compatibility
 

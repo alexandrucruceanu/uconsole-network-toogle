@@ -80,17 +80,21 @@ disable_wifi() {
 enable_mobile() {
     echo "Enabling Mobile Data..."
     
-    # First try to enable the 4G module (depends on uConsole model)
+    # First try to enable the 4G module (prioritizing CM4 model since user has CM4-based uConsole)
     if command -v uconsole-4g-cm4 &> /dev/null; then
         echo "Using CM4 model command..."
         uconsole-4g-cm4 enable
+        MODEL="CM4"
     elif command -v uconsole-4g &> /dev/null; then
-        echo "Using A06/R01 model command..."
+        echo "CM4 command not found, trying A06/R01 model command..."
         uconsole-4g enable
+        MODEL="A06/R01"
     else
         echo "Failed to enable 4G module. Please check your uConsole model."
         exit 1
     fi
+    
+    echo "Using uConsole $MODEL model commands"
     
     # Wait for the module to initialize
     echo "Waiting for 4G module to initialize (20 seconds)..."
@@ -184,11 +188,15 @@ disable_mobile() {
     # Bring down the 4G connection if it exists
     nmcli connection down 4gnet 2>/dev/null
     
-    # Power down the 4G module (depends on uConsole model)
+    # Power down the 4G module (prioritizing CM4 model)
     if command -v uconsole-4g-cm4 &> /dev/null; then
+        echo "Using CM4 model command..."
         uconsole-4g-cm4 disable
     elif command -v uconsole-4g &> /dev/null; then
+        echo "CM4 command not found, trying A06/R01 model command..."
         uconsole-4g disable
+    else
+        echo "Failed to disable 4G module. Please check your uConsole model."
     fi
     
     echo "Mobile data disabled"

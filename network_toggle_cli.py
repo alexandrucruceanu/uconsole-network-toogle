@@ -95,13 +95,13 @@ class NetworkToggleCLI:
     def enable_mobile_data(self):
         print("Enabling Mobile Data...")
         
-        # First try to enable the 4G module (depends on uConsole model)
+        # First try to enable the 4G module (prioritizing CM4 model since user has CM4-based uConsole)
         try:
-            print("Trying CM4 model command...")
+            print("Using CM4 model command...")
             self.run_command(["uconsole-4g-cm4", "enable"])
         except:
             try:
-                print("Trying A06/R01 model command...")
+                print("CM4 command failed, trying A06/R01 model command...")
                 self.run_command(["uconsole-4g", "enable"])
             except:
                 print("Failed to enable 4G module. Please check your uConsole model.")
@@ -191,14 +191,16 @@ class NetworkToggleCLI:
         print("Disabling Mobile Data...")
         # Bring down the 4G connection if it exists
         self.run_command(["nmcli", "connection", "down", "4gnet"], shell=False)
-        # Power down the 4G module (depends on uConsole model)
+        # Power down the 4G module (prioritizing CM4 model)
         try:
+            print("Using CM4 model command...")
             self.run_command(["uconsole-4g-cm4", "disable"])
         except:
             try:
+                print("CM4 command failed, trying A06/R01 model command...")
                 self.run_command(["uconsole-4g", "disable"])
             except:
-                pass
+                print("Failed to disable 4G module.")
         print("Mobile data disabled")
 
     def show_menu(self):

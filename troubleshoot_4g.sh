@@ -48,20 +48,22 @@ fi
 # Step 2: Check uConsole model and enable 4G
 echo ""
 echo "Step 2: Checking uConsole model and enabling 4G module..."
+echo "  User has confirmed CM4-based uConsole."
 
 if command_exists uconsole-4g-cm4; then
-  echo "  Detected CM4 model."
+  echo "  Using CM4 model command..."
   echo "  Enabling 4G module with uconsole-4g-cm4..."
   uconsole-4g-cm4 enable
   MODEL="CM4"
 elif command_exists uconsole-4g; then
-  echo "  Detected A06/R01 model."
+  echo "  [WARNING] CM4 command not found, trying A06/R01 model command..."
   echo "  Enabling 4G module with uconsole-4g..."
   uconsole-4g enable
   MODEL="A06/R01"
 else
   echo "  [WARNING] Could not detect uConsole model commands."
   echo "  Please manually enable the 4G module according to your model."
+  echo "  For CM4-based uConsole, you should use uconsole-4g-cm4 enable"
   read -p "  Press Enter to continue once you've enabled the 4G module..."
   MODEL="unknown"
 fi
