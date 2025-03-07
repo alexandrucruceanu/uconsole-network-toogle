@@ -1,6 +1,6 @@
 # uConsole Network Toggle
 
-A simple application to toggle between WiFi and 4G mobile connectivity on the uConsole device running Kali Linux. Available in both GUI and CLI versions.
+A command-line application to toggle between WiFi and 4G mobile connectivity on the uConsole device running Kali Linux.
 
 ## Features
 
@@ -8,13 +8,13 @@ A simple application to toggle between WiFi and 4G mobile connectivity on the uC
 - Display current connection status and IP address
 - Support for both uConsole CM4 and A06/R01 models
 - Automatic configuration of 4G connection with Digi Spain APN
-- Available in both GUI (Tkinter) and CLI versions
+- Command-line interface for maximum compatibility
 
 ## Requirements
 
 - uConsole with 4G LTE module from Clockwork
 - Kali Linux installed
-- Python 3 (Tkinter required only for GUI version)
+- Python 3
 - NetworkManager and ModemManager installed
 - SIM card inserted in the 4G module
 
@@ -23,30 +23,12 @@ A simple application to toggle between WiFi and 4G mobile connectivity on the uC
 1. Copy all files to your uConsole device
 2. Make the shell scripts executable:
    ```
-   chmod +x network_toggle_linux.sh network_toggle_cli.sh
+   chmod +x network_toggle_cli.sh toggle_network.sh troubleshoot_4g.sh
    ```
 
 ## Usage
 
-### GUI Version (requires Tkinter)
-
-1. Run the GUI application:
-   ```
-   ./network_toggle_linux.sh
-   ```
-   
-   Or directly with Python:
-   ```
-   python3 network_toggle.py
-   ```
-
-2. The application will open with a simple GUI:
-   - Select "WiFi" or "Mobile Data (4G)" using the radio buttons
-   - Click "Enable Selected Network" to enable the selected network type
-   - Click "Refresh Status" to update the connection status
-   - The current connection status and IP address will be displayed
-
-### CLI Version (no GUI dependencies)
+### CLI Version with Interactive Menu
 
 1. Run the CLI application:
    ```
@@ -87,7 +69,7 @@ This script is useful for quickly switching between networks or for use in other
 
 If you need to use a different APN, username, or password, you can edit the following files:
 
-1. For the GUI version, edit `network_toggle.py`:
+1. For the CLI version, edit `network_toggle_cli.py`:
    ```python
    # APN settings for Digi Spain
    self.apn = "internet.digimobil.es"
@@ -95,9 +77,7 @@ If you need to use a different APN, username, or password, you can edit the foll
    self.password = ""  # Leave empty if not required
    ```
 
-2. For the CLI version, edit `network_toggle_cli.py` with the same settings.
-
-3. For the quick toggle script, edit `toggle_network.sh`:
+2. For the quick toggle script, edit `toggle_network.sh`:
    ```bash
    # APN settings for Digi Spain
    APN="internet.digimobil.es"

@@ -1,12 +1,8 @@
 # Installation and Usage Guide
 
-## Error: No module named '_tkinter'
+## CLI Tools for uConsole Network Toggle
 
-If you're seeing this error, it means the Tkinter Python library is not installed on your system. You have two options:
-
-## Option 1: Use the CLI or Command-Line Versions (Recommended)
-
-We've created two versions that don't require Tkinter:
+We've created two command-line tools to manage your network connectivity:
 
 ### CLI Version with Interactive Menu
 
@@ -43,23 +39,38 @@ We've created two versions that don't require Tkinter:
    ./toggle_network.sh status      # Show current status
    ```
 
-## Option 2: Install Tkinter to Use the GUI Version
-
-If you want to use the GUI version, you can install Tkinter on Kali Linux:
-
-```
-sudo apt update
-sudo apt install python3-tk
-```
-
-After installation, you can run the GUI version:
-```
-./network_toggle_linux.sh
-```
 
 ## Troubleshooting
 
-If you encounter any issues:
+### "4G modem not detected" Error
+
+If you get a "4G modem not detected" error even though the modem light is on, use the troubleshooting script:
+
+1. Make the script executable:
+   ```
+   chmod +x troubleshoot_4g.sh
+   ```
+
+2. Run the script as root:
+   ```
+   sudo ./troubleshoot_4g.sh
+   ```
+
+This script will:
+- Check for required tools
+- Enable the 4G module for your uConsole model
+- Test AT commands on different ttyUSB ports
+- Find the working port for your modem
+- Restart ModemManager
+- Check for modem detection
+- Set up the network connection
+- Provide a detailed summary and next steps
+
+The script will automatically try to fix common issues and will tell you exactly what's working and what's not.
+
+### Other Troubleshooting Steps
+
+If the troubleshooting script doesn't resolve your issue:
 
 1. Make sure all scripts are executable:
    ```
@@ -70,10 +81,6 @@ If you encounter any issues:
 
 3. Verify that the APN settings match your provider (currently set to "internet.digimobil.es" for Digi Spain).
 
-4. If you're having issues with the 4G connection, try running the commands manually to see more detailed error messages:
-   ```
-   sudo uconsole-4g enable  # or uconsole-4g-cm4 enable
-   echo -en "AT+CUSBPIDSWITCH?\r\n" | sudo socat - /dev/ttyUSB2,crnl
-   sudo nmcli connection add type gsm ifname ttyUSB2 con-name 4gnet apn internet.digimobil.es
-   sudo nmcli connection up 4gnet
-   ```
+4. Try rebooting your uConsole and running the troubleshooting script again.
+
+5. If the troubleshooting script identifies a working port that's different from ttyUSB2, edit the scripts to use that port instead.
